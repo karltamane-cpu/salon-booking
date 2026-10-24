@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio Belle | Réservation</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #faf7f4;
+      color: #292522;
+    }
+    header {
+      padding: 22px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      border-bottom: 1px solid #eee5df;
+    }
+    .logo { font-size: 21px; font-weight: 800; }
+    .logo span { color: #a66b54; }
+    .tag { color: #8c8179; font-size: 13px; }
+    main { max-width: 760px; margin: 38px auto; padding: 0 18px; }
+    .hero { text-align: center; margin-bottom: 32px; }
+    .eyebrow {
+      color: #a66b54;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    h1 { font-size: clamp(30px, 6vw, 44px); margin: 12px 0; }
+    .hero p { color: #756b65; line-height: 1.6; }
+    .panel {
+      background: #fff;
+      padding: 24px;
+      margin: 18px 0;
+      border: 1px solid #eee5df;
+      border-radius: 18px;
+    }
+    h2 { font-size: 19px; margin: 0 0 18px; }
+    .services { display: grid; gap: 12px; }
+    .service {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid #e9e0da;
+      border-radius: 12px;
+      cursor: pointer;
+      background: white;
+      text-align: left;
+      color: inherit;
+      width: 100%;
+    }
+    .service.selected {
+      border: 2px solid #a66b54;
+      background: #fcf5f1;
+    }
+    .service strong { display: block; margin-bottom: 6px; }
+    .muted { font-size: 13px; color: #817770; }
+    .price { font-weight: bold; white-space: nowrap; }
+    label { display: block; font-size: 14px; font-weight: bold; margin: 16px 0 8px; }
+    input, select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ded5cf;
+      border-radius: 9px;
+      background: #fff;
+      font: inherit;
+    }
+    .times { display: flex; flex-wrap: wrap; gap: 9px; }
+    .time {
+      border: 1px solid #ded5cf;
+      border-radius: 9px;
+      background: white;
+      padding: 11px 15px;
+      cursor: pointer;
+    }
+    .time.selected { background: #a66b54; color: white; border-color: #a66b54; }
+    .summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 17px 0;
+      border-top: 1px solid #eee5df;
+      margin-top: 20px;
+    }
+    .primary {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 16px;
+      background: #a66b54;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .primary:hover { background: #89543f; }
+    #result {
+      display: none;
+      background: #edf7ee;
+      border: 1px solid #c8e4cb;
+      border-radius: 12px;
+      padding: 18px;
+      line-height: 1.6;
+      margin-top: 18px;
+    }
+    footer { text-align: center; color: #8c8179; font-size: 12px; padding: 25px; }
+    @media (max-width: 480px) {
+      .panel { padding: 18px; }
+      header { padding: 18px; }
+      .tag { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Studio <span>Belle.</span></div>
+    <div class="tag">Réservation en ligne</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Bienvenue</div>
+      <h1>Réservez votre rendez-vous</h1>
+      <p>Choisissez votre prestation, votre créneau et réservez en quelques instants.</p>
+    </section>
+
+    <section class="panel">
+      <h2>1. Choisissez une prestation</h2>
+      <div class="services">
+        <button class="service selected" type="button" data-name="Nattes collées" data-price="35" data-duration="1 h 30">
+          <span><strong>Nattes collées</strong><span class="muted">Durée : 1 h 30</span></span>
+          <span class="price">£35</span>
+        </button>
+        <button class="service" type="button" data-name="Tresses" data-price="55" data-duration="2 h 30">
+          <span><strong>Tresses</strong><span class="muted">Durée : 2 h 30</span></span>
+          <span class="price">£55</span>
+        </button>
+        <button class="service" type="button" data-name="Coiffure personnalisée" data-price="25" data-duration="1 h">
+          <span><strong>Coiffure personnalisée</strong><span class="muted">Durée : 1 h</span></span>
+          <span class="price">£25</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>2. Choisissez une date et une heure</h2>
+      <label for="date">Date du rendez-vous</label>
+      <input type="date" id="date" required>
+      <label>Heure disponible</label>
+      <div class="times" id="times">
+        <button class="time" type="button">09:00</button>
+        <button class="time" type="button">10:30</button>
+        <button class="time" type="button">12:00</button>
+        <button class="time" type="button">14:00</button>
+        <button class="time" type="button">15:30</button>
+        <button class="time" type="button">17:00</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>3. Vos coordonnées</h2>
+      <form id="bookingForm">
+        <label for="name">Nom complet</label>
+        <input id="name" type="text" placeholder="Votre nom" required>
+        <label for="phone">Numéro de téléphone</label>
+        <input id="phone" type="tel" placeholder="Votre numéro" required>
+        <div class="summary">
+          <span id="summaryService">Nattes collées</span>
+          <strong id="summaryPrice">£35</strong>
+        </div>
+        <button class="primary" type="submit">Confirmer ma demande de réservation</button>
+      </form>
+      <div id="result" role="status"></div>
+    </section>
+  </main>
+
+  <footer>Démo de réservation · Studio Belle</footer>
+
+  <script>
+    let selectedService = {
+      name: "Nattes collées",
+      price: 35,
+      duration: "1 h 30"
+    };
+    let selectedTime = "";
+
+    const serviceButtons = document.querySelectorAll(".service");
+    const timeButtons = document.querySelectorAll(".time");
+    const dateInput = document.getElementById("date");
+
+    const today = new Date();
+    const localToday = new Date(
+      today.getTime() - today.getTimezoneOffset() * 60000
+    ).toISOString().split("T")[0];
+    dateInput.min = localToday;
+
+    serviceButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        serviceButtons.forEach(item => item.classList.remove("selected"));
+        button.classList.add("selected");
+
+        selectedService = {
+          name: button.dataset.name,
+          price: Number(button.dataset.price),
+          duration: button.dataset.duration
+        };
+
+        document.getElementById("summaryService").textContent = selectedService.name;
+        document.getElementById("summaryPrice").textContent = "£" + selectedService.price;
+      });
+    });
+
+    timeButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        timeButtons.forEach(item => item.classList.remove("selected"));
+        button.classList.add("selected");
+        selectedTime = button.textContent;
+      });
+    });
+
+    document.getElementById("bookingForm").addEventListener("submit", event => {
+      event.preventDefault();
+
+      if (!dateInput.value) {
+        alert("Veuillez choisir une date.");
+        dateInput.focus();
+        return;
+      }
+
+      if (!selectedTime) {
+        alert("Veuillez choisir une heure.");
+        return;
+      }
+
+      const name = document.getElementById("name").value.trim();
+      const date = dateInput.value;
+      const formattedDate = new Date(date + "T12:00:00").toLocaleDateString("fr-FR");
+
+      const result = document.getElementById("result");
+      result.innerHTML =
+        "<strong>Demande de démonstration créée !</strong><br>" +
+        "Merci " + name.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + " !<br>" +
+        "Prestation : " + selectedService.name + "<br>" +
+        "Date : " + formattedDate + " à " + selectedTime + "<br>" +
+        "Prix indicatif : £" + selectedService.price + "<br><br>" +
+        "<strong>Attention :</strong> cette démo ne transmet ni n'enregistre réellement la réservation.";
+      result.style.display = "block";
+      result.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  </script>
+</body>
+</html>
